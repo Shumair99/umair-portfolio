@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Constellation from "@/components/Constellation";
 
 const primaryNav = [
   {
@@ -107,20 +108,22 @@ export default function Home() {
     <div className="flex min-h-screen bg-[#202123] text-[#ececf1]">
       <aside className="hidden w-64 flex-col border-r border-white/10 bg-[#171717] md:flex">
         <div className="flex items-center justify-between px-4 py-5">
-          <div className="flex items-center gap-3">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-8 w-8"
-              aria-hidden="true"
-            >
-              <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
-            </svg>
+          <div className="flex items-center gap-3 pl-3">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/5">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-5 w-5"
+                aria-hidden="true"
+              >
+                <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
+              </svg>
+            </span>
             <div className="text-sm font-medium text-white">Workspace</div>
           </div>
           <button
@@ -211,7 +214,7 @@ export default function Home() {
         </div>
       </aside>
 
-      <main className="flex flex-1 flex-col">
+      <main className="flex flex-1 flex-col overflow-hidden">
         <header className="flex items-center justify-between border-b border-white/10 px-4 py-3">
           <div className="flex items-center gap-3">
             <div className="relative">
@@ -251,8 +254,9 @@ export default function Home() {
           </div>
         </header>
 
-        <div className="flex flex-1 items-center justify-center px-4">
-          <div className="w-full max-w-2xl space-y-8 text-center">
+        <div className="relative flex flex-1 items-center justify-center px-4">
+          <Constellation className="pointer-events-none absolute inset-0 z-0" />
+          <div className="relative z-10 w-full max-w-2xl space-y-8 text-center">
             <h1 className="text-3xl font-semibold text-white md:text-4xl">
               Umair&apos;s Portfolio (not ChatGPT...)
             </h1>
