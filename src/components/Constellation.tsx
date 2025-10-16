@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
-import type { Engine } from "tsparticles-engine";
+import type { Engine, ISourceOptions } from "@tsparticles/engine";
 import { loadFull } from "tsparticles";
 
 type ConstellationProps = {
@@ -25,29 +25,24 @@ export default function Constellation({ className }: ConstellationProps) {
     };
   }, []);
 
-  const options = useMemo(
+  const options = useMemo<ISourceOptions>(
     () => ({
       fullScreen: { enable: false },
       background: { color: "transparent" },
-      detectRetina: true,
       fpsLimit: 60,
+      detectRetina: true,
       particles: {
-        number: {
-          value: 200,
-          density: { enable: true, area: 800 },
-        },
+        number: { value: 130, density: { enable: true, area: 850 } },
         color: { value: "#ffffff" },
         shape: { type: "circle" },
         opacity: {
           value: 0.7,
-          random: { enable: true, minimumValue: 0.3 },
+          random: { enable: true, minimumValue: 0.35 },
         },
-        size: {
-          value: { min: 1, max: 2.2 },
-        },
+        size: { value: { min: 1, max: 2.4 } },
         move: {
           enable: true,
-          speed: 4,
+          speed: { min: 0.75, max: 2.2 },
           direction: "none",
           random: true,
           straight: false,
@@ -55,21 +50,24 @@ export default function Constellation({ className }: ConstellationProps) {
         },
         links: {
           enable: true,
-          distance: 140,
+          distance: 160,
           color: "#ffffff",
-          opacity: 0.25,
+          opacity: 0.3,
           width: 0.6,
         },
       },
       interactivity: {
-        detectsOn: "canvas",
+        detectsOn: "canvas" as const,
         events: {
           onHover: { enable: true, mode: "grab" },
-          onClick: { enable: false, mode: [] },
-          resize: true,
+          onClick: { enable: false },
+          resize: { enable: true },
         },
         modes: {
-          grab: { distance: 180, links: { opacity: 0.35 } },
+          grab: {
+            distance: 220,
+            links: { opacity: 0.45 },
+          },
         },
       },
     }),
@@ -82,3 +80,4 @@ export default function Constellation({ className }: ConstellationProps) {
 
   return <Particles className={className} options={options} />;
 }
+
