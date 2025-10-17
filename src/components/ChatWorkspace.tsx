@@ -1,9 +1,19 @@
-"use client";
+'use client';
 
 import { useEffect, useRef, useState } from "react";
 
-const DEFAULT_PROMPT = "Tell me about Umair...";
-const PLACEHOLDER_RESPONSE = `Umair is a software dev who specialises in Java and Python development.`;
+const PROMPTS = [
+  {
+    question: "Tell me about Umair",
+    answer:
+      "Umair is a multidisciplinary creator with a passion for crafting thoughtful digital experiences. This placeholder response is where a richer story about Umair will eventually live.",
+  },
+  {
+    question: "What are his skills and qualifications?",
+    answer:
+      "He's a graduate with a blend of software engineering skills, an eye for product storytelling, and hands-on experience shipping polished interfaces.",
+  },
+];
 
 type Message = {
   id: string;
@@ -12,12 +22,15 @@ type Message = {
 };
 
 export default function ChatWorkspace() {
+  const [stage, setStage] = useState(0);
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTypingPrompt, setIsTypingPrompt] = useState(true);
 
   const typewriterRef = useRef<number | null>(null);
   const indexRef = useRef(0);
+
+  const currentPrompt = PROMPTS[Math.min(stage, PROMPTS.length - 1)];
 
   useEffect(() => {
     if (!isTypingPrompt) return;
@@ -28,10 +41,10 @@ export default function ChatWorkspace() {
     indexRef.current = 0;
     typewriterRef.current = window.setInterval(() => {
       const nextIndex = indexRef.current + 1;
-      setInputValue(DEFAULT_PROMPT.slice(0, nextIndex));
+      setInputValue(currentPrompt.question.slice(0, nextIndex));
       indexRef.current = nextIndex;
 
-      if (nextIndex >= DEFAULT_PROMPT.length) {
+      if (nextIndex >= currentPrompt.question.length) {
         if (typewriterRef.current) {
           window.clearInterval(typewriterRef.current);
         }
@@ -46,17 +59,22 @@ export default function ChatWorkspace() {
       }
       typewriterRef.current = null;
     };
-  }, [isTypingPrompt]);
+  }, [currentPrompt.question, isTypingPrompt]);
 
-  const resetPrompt = () => {
+  const resetTyping = () => {
     if (typewriterRef.current) {
       window.clearInterval(typewriterRef.current);
     }
     typewriterRef.current = null;
-    setMessages([]);
-    setInputValue("");
     indexRef.current = 0;
     setIsTypingPrompt(true);
+  };
+
+  const handleReset = () => {
+    setStage(0);
+    setMessages([]);
+    setInputValue("");
+    resetTyping();
   };
 
   const stopTypewriter = () => {
@@ -64,21 +82,32 @@ export default function ChatWorkspace() {
       window.clearInterval(typewriterRef.current);
       typewriterRef.current = null;
     }
-    indexRef.current = DEFAULT_PROMPT.length;
+    indexRef.current = currentPrompt.question.length;
     setIsTypingPrompt(false);
-    setInputValue(DEFAULT_PROMPT);
+    setInputValue(currentPrompt.question);
   };
 
   const handleSend = () => {
+    if (stage >= PROMPTS.length) {
+      return;
+    }
+
     if (isTypingPrompt) {
       stopTypewriter();
     }
 
     setMessages((prev) => [
       ...prev,
-      { id: crypto.randomUUID(), role: "user", content: DEFAULT_PROMPT },
-      { id: crypto.randomUUID(), role: "assistant", content: PLACEHOLDER_RESPONSE },
+      { id: crypto.randomUUID(), role: "user", content: currentPrompt.question },
+      { id: crypto.randomUUID(), role: "assistant", content: currentPrompt.answer },
     ]);
+
+    if (stage + 1 < PROMPTS.length) {
+      const nextStage = stage + 1;
+      setStage(nextStage);
+      setInputValue("");
+      setIsTypingPrompt(true);
+    }
   };
 
   const showConversation = messages.length > 0;
@@ -90,7 +119,7 @@ export default function ChatWorkspace() {
           type="button"
           className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#3f4049] text-xl font-medium leading-none text-white hover:bg-[#4b4c56]"
           aria-label="Start a new prompt"
-          onClick={resetPrompt}
+          onClick={handleReset}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -195,7 +224,7 @@ export default function ChatWorkspace() {
             className={
               message.role === "user"
                 ? "self-end inline-flex max-w-[90%] items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm text-white shadow-lg"
-                : "self-start max-w-[90%] space-y-3 rounded-3xl border border-white/10 bg-black/60 p-6 text-sm leading-relaxed text-white/80"
+                : "self-start max-w-[90%] space-y-3 rounded-3xl border border-white/10 bg-black/40 p-6 text-sm leading-relaxed text-white/80"
             }
           >
             <p className="whitespace-pre-line">{message.content}</p>
