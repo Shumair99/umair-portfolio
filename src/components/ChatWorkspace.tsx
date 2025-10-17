@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const DEFAULT_PROMPT = "Tell me about Umair";
-const PLACEHOLDER_RESPONSE = `Umair is a software dev. Placeholder bla bla bla.`;
+const DEFAULT_PROMPT = "Tell me about Umair...";
+const PLACEHOLDER_RESPONSE = `Umair is a software dev who specialises in Java and Python development.`;
 
 type Message = {
   id: string;
@@ -187,22 +187,22 @@ export default function ChatWorkspace() {
   }
 
   return (
-    <div className="relative z-10 flex w-full max-w-3xl flex-col items-center gap-6 text-center">
-      <div className="w-full space-y-4 text-left">
+    <div className="relative z-10 flex min-h-[70vh] w-full max-w-3xl flex-1 flex-col justify-between gap-8">
+      <div className="flex flex-col gap-4">
         {messages.map((message) => (
           <div
             key={message.id}
             className={
               message.role === "user"
-                ? "ml-auto inline-flex max-w-[85%] items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm text-white shadow-lg"
-                : "mr-auto max-w-[90%] space-y-3 rounded-3xl border border-white/10 bg-black/40 p-6 text-sm leading-relaxed text-white/80"
+                ? "self-end inline-flex max-w-[90%] items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-sm text-white shadow-lg"
+                : "self-start max-w-[90%] space-y-3 rounded-3xl border border-white/10 bg-black/60 p-6 text-sm leading-relaxed text-white/80"
             }
           >
             <p className="whitespace-pre-line">{message.content}</p>
           </div>
         ))}
       </div>
-      {inputBar}
+      <div className="w-full">{inputBar}</div>
     </div>
   );
 }
