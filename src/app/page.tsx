@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from "react";
 import Link from "next/link";
 import Constellation from "@/components/Constellation";
 import ChatWorkspace from "@/components/ChatWorkspace";
@@ -105,11 +108,21 @@ const projects = [
 ];
 
 export default function Home() {
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+
+  const toggleSidebar = () => setSidebarCollapsed((prev) => !prev);
+
+  const asideWidth = sidebarCollapsed ? "w-20" : "w-64";
+  const navItemBaseClasses =
+    "flex w-full items-center rounded-lg px-3 py-2 text-left font-medium text-white transition hover:bg-white/10";
+
   return (
     <div className="flex h-screen overflow-hidden bg-[#202123] text-[#ececf1]">
-      <aside className="hidden w-64 flex-col border-r border-white/10 bg-[#171717] md:flex">
-        <div className="flex items-center justify-between px-4 py-5">
-          <div className="flex items-center gap-3 pl-3">
+      <aside
+        className={`hidden ${asideWidth} flex-col border-r border-white/10 bg-[#171717] transition-all duration-300 md:flex`}
+      >
+        <div className={`flex items-center justify-between ${sidebarCollapsed ? "px-2" : "px-4"} py-5`}>
+          <div className={`flex items-center ${sidebarCollapsed ? "justify-center" : "gap-3 pl-3"}`}>
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/5">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -125,12 +138,14 @@ export default function Home() {
                 <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
               </svg>
             </span>
-            <div className="text-sm font-medium text-white">Workspace</div>
+            {!sidebarCollapsed && <div className="text-sm font-medium text-white">Workspace</div>}
           </div>
           <button
             type="button"
             className="inline-flex items-center justify-center rounded-md p-1 text-white transition hover:bg-white/10"
             aria-label="Sidebar layout options"
+            aria-expanded={!sidebarCollapsed}
+            onClick={toggleSidebar}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -149,16 +164,17 @@ export default function Home() {
           </button>
         </div>
 
-        <nav className="flex-1 overflow-y-auto px-4 text-sm text-white/70">
+        <nav
+          className={`flex-1 overflow-y-auto text-sm text-white/70 ${sidebarCollapsed ? "px-2" : "px-4"}`}
+        >
           <div className="space-y-1 pb-5">
             {primaryNav.map((item) => {
-              const content = (
-                <>
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/5">
-                    {item.icon}
-                  </span>
-                  {item.label}
-                </>
+              const linkClasses = `${navItemBaseClasses} ${sidebarCollapsed ? "justify-center gap-0" : "gap-3"}`;
+              const label = !sidebarCollapsed ? <span>{item.label}</span> : null;
+              const icon = (
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/5">
+                  {item.icon}
+                </span>
               );
 
               if (item.external) {
@@ -168,9 +184,10 @@ export default function Home() {
                     href={item.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left font-medium text-white transition hover:bg-white/10"
+                    className={linkClasses}
                   >
-                    {content}
+                    {icon}
+                    {label}
                   </a>
                 );
               }
@@ -179,38 +196,45 @@ export default function Home() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left font-medium text-white transition hover:bg-white/10"
+                  className={linkClasses}
                 >
-                  {content}
+                  {icon}
+                  {label}
                 </Link>
               );
             })}
           </div>
 
-          <div className="space-y-2">
-            <p className="px-3 text-xs uppercase tracking-wide text-white/35">Projects</p>
-            <div className="space-y-1">
-              {projects.map((title) => (
-                <button
-                  key={title}
-                  className="w-full truncate rounded-lg px-3 py-2 text-left text-white/70 transition hover:bg-white/10 hover:text-white"
-                >
-                  {title}
-                </button>
-              ))}
+          {!sidebarCollapsed && (
+            <div className="space-y-2">
+              <p className="px-3 text-xs uppercase tracking-wide text-white/35">Projects</p>
+              <div className="space-y-1">
+                {projects.map((title) => (
+                  <button
+                    key={title}
+                    className="w-full truncate rounded-lg px-3 py-2 text-left text-white/70 transition hover:bg-white/10 hover:text-white"
+                  >
+                    {title}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </nav>
 
-        <div className="border-t border-white/10 px-4 py-4 text-sm text-white">
-          <div className="flex items-center gap-3">
+        <div
+          className={`border-t border-white/10 text-sm text-white ${sidebarCollapsed ? "px-2 py-4" : "px-4 py-4"}`}
+        >
+          <div className={`flex items-center ${sidebarCollapsed ? "justify-center" : "gap-3"}`}>
             <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#9157d3] text-xs font-semibold uppercase text-white">
               UA
             </div>
-            <div className="flex flex-1 flex-col">
-              <span className="text-sm font-medium">Umair Ahmed</span>
-              <span className="text-xs text-white/50">Plus</span>
-            </div>
+            {!sidebarCollapsed && (
+              <div className="flex flex-1 flex-col">
+                <span className="text-sm font-medium">Umair Ahmed</span>
+                <span className="text-xs text-white/50">Plus</span>
+              </div>
+            )}
           </div>
         </div>
       </aside>

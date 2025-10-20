@@ -264,6 +264,7 @@ export default function ChatWorkspace() {
               <motion.h1 className="text-3xl font-semibold text-white md:text-4xl">
                 Umair&apos;s Portfolio (not ChatGPT...)
               </motion.h1>
+              <div className="w-full max-w-3xl">{inputBar}</div>
             </motion.div>
           ) : (
             <motion.div
@@ -304,7 +305,7 @@ export default function ChatWorkspace() {
         </AnimatePresence>
       </div>
 
-      <div className="w-full pt-4">{inputBar}</div>
+      {showConversation && <div className="w-full pt-4">{inputBar}</div>}
     </motion.div>
   );
 }
