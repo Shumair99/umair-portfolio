@@ -106,7 +106,7 @@ const projects = [
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen bg-[#202123] text-[#ececf1]">
+    <div className="flex h-screen overflow-hidden bg-[#202123] text-[#ececf1]">
       <aside className="hidden w-64 flex-col border-r border-white/10 bg-[#171717] md:flex">
         <div className="flex items-center justify-between px-4 py-5">
           <div className="flex items-center gap-3 pl-3">
@@ -255,7 +255,7 @@ export default function Home() {
           </div>
         </header>
 
-        <div className="relative flex flex-1 items-center justify-center px-4 py-10">
+        <div className="relative flex flex-1 items-stretch justify-center overflow-hidden min-h-0 px-4 py-0">
           <Constellation className="pointer-events-none absolute inset-0 z-0" />
           <ChatWorkspace />
         </div>
