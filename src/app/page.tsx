@@ -109,12 +109,69 @@ const projects = [
 
 export default function Home() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   const toggleSidebar = () => setSidebarCollapsed((prev) => !prev);
+  const openMobileSidebar = () => setMobileSidebarOpen(true);
+  const closeMobileSidebar = () => setMobileSidebarOpen(false);
 
   const asideWidth = sidebarCollapsed ? "w-20" : "w-64";
   const navItemBaseClasses =
     "flex w-full items-center rounded-lg px-3 py-2 text-left font-medium text-white transition hover:bg-white/10";
+
+  const renderPrimaryNav = (withLabels: boolean, onNavigate?: () => void) => (
+    <div className="space-y-1 pb-5">
+      {primaryNav.map((item) => {
+        const linkClasses = `${navItemBaseClasses} ${withLabels ? "gap-3" : "justify-center gap-0"}`;
+        const label = withLabels ? <span>{item.label}</span> : null;
+        const icon = (
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/5">
+            {item.icon}
+          </span>
+        );
+
+        if (item.external) {
+          return (
+            <a
+              key={item.label}
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={linkClasses}
+              onClick={onNavigate}
+            >
+              {icon}
+              {label}
+            </a>
+          );
+        }
+
+        return (
+          <Link key={item.label} href={item.href} className={linkClasses} onClick={onNavigate}>
+            {icon}
+            {label}
+          </Link>
+        );
+      })}
+    </div>
+  );
+
+  const renderProjects = (onNavigate?: () => void) => (
+    <div className="space-y-2">
+      <p className="px-3 text-xs uppercase tracking-wide text-white/35">Projects</p>
+      <div className="space-y-1">
+        {projects.map((title) => (
+          <button
+            key={title}
+            className="w-full truncate rounded-lg px-3 py-2 text-left text-white/70 transition hover:bg-white/10 hover:text-white"
+            onClick={onNavigate}
+          >
+            {title}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#202123] text-[#ececf1]">
@@ -144,7 +201,7 @@ export default function Home() {
           )}
           <button
             type="button"
-            className={`inline-flex items-center justify-center rounded-md p-1 text-white transition hover:bg-white/10 ${
+            className={`hidden items-center justify-center rounded-lg px-5 py-3 text-white transition hover:bg-white/10 md:inline-flex ${
               sidebarCollapsed ? "mx-auto" : ""
             }`}
             aria-label="Sidebar layout options"
@@ -171,59 +228,9 @@ export default function Home() {
         <nav
           className={`flex-1 overflow-y-auto text-sm text-white/70 ${sidebarCollapsed ? "px-2" : "px-4"}`}
         >
-          <div className="space-y-1 pb-5">
-            {primaryNav.map((item) => {
-              const linkClasses = `${navItemBaseClasses} ${sidebarCollapsed ? "justify-center gap-0" : "gap-3"}`;
-              const label = !sidebarCollapsed ? <span>{item.label}</span> : null;
-              const icon = (
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/5">
-                  {item.icon}
-                </span>
-              );
+          {renderPrimaryNav(!sidebarCollapsed)}
 
-              if (item.external) {
-                return (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={linkClasses}
-                  >
-                    {icon}
-                    {label}
-                  </a>
-                );
-              }
-
-              return (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className={linkClasses}
-                >
-                  {icon}
-                  {label}
-                </Link>
-              );
-            })}
-          </div>
-
-          {!sidebarCollapsed && (
-            <div className="space-y-2">
-              <p className="px-3 text-xs uppercase tracking-wide text-white/35">Projects</p>
-              <div className="space-y-1">
-                {projects.map((title) => (
-                  <button
-                    key={title}
-                    className="w-full truncate rounded-lg px-3 py-2 text-left text-white/70 transition hover:bg-white/10 hover:text-white"
-                  >
-                    {title}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+          {!sidebarCollapsed && renderProjects()}
         </nav>
 
         <div
@@ -243,13 +250,79 @@ export default function Home() {
         </div>
       </aside>
 
+      {mobileSidebarOpen && (
+        <>
+          <div
+            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
+            onClick={closeMobileSidebar}
+            aria-hidden="true"
+          />
+          <aside className="fixed inset-y-0 left-0 z-50 flex w-64 flex-col bg-[#171717] px-4 py-5 md:hidden">
+            <div className="flex items-center justify-between pb-4">
+              <div className="flex items-center gap-3">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/5">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-5 w-5"
+                    aria-hidden="true"
+                  >
+                    <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
+                  </svg>
+                </span>
+                <div className="text-sm font-medium text-white">Workspace</div>
+              </div>
+              <button
+                type="button"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition hover:bg-white/10"
+                onClick={closeMobileSidebar}
+                aria-label="Close sidebar"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  className="h-5 w-5"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="m6 6 12 12M6 18 18 6" />
+                </svg>
+              </button>
+            </div>
+
+            <nav className="flex-1 overflow-y-auto text-sm text-white/70">
+              {renderPrimaryNav(true, closeMobileSidebar)}
+              {renderProjects(closeMobileSidebar)}
+            </nav>
+
+            <div className="border-t border-white/10 pt-4 text-sm text-white">
+              <div className="flex items-center gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#9157d3] text-xs font-semibold uppercase text-white">
+                  UA
+                </div>
+                <div className="flex flex-1 flex-col">
+                  <span className="text-sm font-medium">Umair Ahmed</span>
+                  <span className="text-xs text-white/50">Plus</span>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </>
+      )}
+
       <main className="flex flex-1 flex-col overflow-hidden">
-        <header className="flex items-center justify-between border-b border-white/10 px-4 py-3">
-          <div className="flex items-center gap-3">
+        <header className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-4 py-3">
+          <div className="flex flex-1 flex-wrap items-center gap-2 sm:flex-none sm:gap-3">
             <div className="relative">
               <button
                 type="button"
-                className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/10"
+                className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-white/10 sm:px-4 sm:py-2 sm:text-sm"
                 aria-haspopup="true"
                 aria-expanded="false"
               >
@@ -269,19 +342,38 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 text-sm text-white/70">
-            <button className="hidden items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 hover:bg-white/10 sm:flex">
-              <span className="text-xs uppercase tracking-wide text-white/60">Status</span>
-              <span className="inline-flex items-center gap-1 rounded-full bg-[#10a37f]/20 px-2 py-0.5 text-xs font-medium text-[#10a37f]">
+          <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-white/70 sm:text-sm">
+            <button className="flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 hover:bg-white/10 sm:px-4">
+              <span className="uppercase tracking-wide text-[0.65rem] text-white/60 sm:text-xs">Status</span>
+              <span className="inline-flex items-center gap-1 rounded-full bg-[#10a37f]/20 px-2 py-0.5 text-[0.65rem] font-medium text-[#10a37f] sm:text-xs">
                 <span className="h-2 w-2 rounded-full bg-[#10a37f]" />
                 Looking for work
               </span>
             </button>
-            <button className="rounded-full border border-white/15 bg-white/5 px-4 py-1.5 font-medium text-white hover:bg-white/10">
+            <button className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-white/10 sm:px-4 sm:text-sm">
               Hire me
             </button>
           </div>
         </header>
+
+        <button
+          type="button"
+          className="ml-4 mt-3 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/5 text-white transition hover:bg-white/10 md:hidden"
+          onClick={openMobileSidebar}
+          aria-label="Open sidebar"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            className="h-5 w-5"
+          >
+            <rect width="18" height="18" x="3" y="3" rx="2" />
+            <path d="M9 3v18" />
+          </svg>
+        </button>
 
         <div className="relative flex flex-1 items-stretch justify-center overflow-hidden min-h-0 px-4 py-0">
           <Constellation className="pointer-events-none absolute inset-0 z-0" />

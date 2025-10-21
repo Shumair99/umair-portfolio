@@ -151,10 +151,10 @@ export default function ChatWorkspace() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
     >
-      <div className="flex items-center gap-2 rounded-full bg-[#353640] px-4 py-3">
+      <div className="flex items-center gap-2 rounded-full bg-[#353640] px-3 py-2 sm:gap-3 sm:px-4 sm:py-3">
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#3f4049] text-xl font-medium leading-none text-white hover:bg-[#4b4c56]"
+          className="inline-flex aspect-square h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#3f4049] text-xl font-medium leading-none text-white hover:bg-[#4b4c56] sm:h-11 sm:w-11"
           aria-label="Start a new prompt"
           onClick={handleReset}
         >
@@ -174,13 +174,13 @@ export default function ChatWorkspace() {
         <input
           value={inputValue}
           readOnly
-          className="flex-1 bg-transparent text-left text-sm text-white placeholder:text-white/40 focus:outline-none"
+          className="flex-1 min-w-0 bg-transparent text-left text-sm text-white placeholder:text-white/40 focus:outline-none"
         />
 
         <div className="flex items-center gap-1.5 text-white/60">
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-white/10"
+            className="inline-flex aspect-square h-9 w-9 flex-shrink-0 items-center justify-center rounded-full hover:bg-white/10 sm:h-10 sm:w-10"
             aria-label="Voice input"
           >
             <svg
@@ -205,7 +205,7 @@ export default function ChatWorkspace() {
           </button>
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-white/10"
+            className="inline-flex aspect-square h-9 w-9 flex-shrink-0 items-center justify-center rounded-full hover:bg-white/10 sm:h-10 sm:w-10"
             aria-label="Sound options"
           >
             <svg
@@ -221,7 +221,7 @@ export default function ChatWorkspace() {
           </button>
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-black transition hover:bg-white/80 disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex aspect-square h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-white text-black transition hover:bg-white/80 disabled:cursor-not-allowed disabled:opacity-50 sm:h-11 sm:w-11"
             aria-label="Send message"
             onClick={handleSend}
             disabled={sendDisabled}
