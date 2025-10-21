@@ -343,15 +343,18 @@ export default function Home() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-white/70 sm:text-sm">
-            <button className="flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 hover:bg-white/10 sm:px-4">
+            <button className="flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.08] px-3 py-1.5 hover:bg-white/10 sm:px-4">
               <span className="uppercase tracking-wide text-[0.65rem] text-white/60 sm:text-xs">Status</span>
-              <span className="inline-flex items-center gap-1 rounded-full bg-[#10a37f]/20 px-2 py-0.5 text-[0.65rem] font-medium text-[#10a37f] sm:text-xs">
-                <span className="h-2 w-2 rounded-full bg-[#10a37f]" />
+              <span className="inline-flex items-center gap-1 rounded-full bg-[#f87171]/25 px-2 py-0.5 text-[0.65rem] font-medium text-[#f87171] shadow-[0_0_10px_rgba(248,113,113,0.45)] sm:text-xs">
+                <span className="relative flex h-2.5 w-2.5 items-center justify-center">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#f87171]/60" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[#f87171]" />
+                </span>
                 Looking for work
               </span>
             </button>
             <button className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-white/10 sm:px-4 sm:text-sm">
-              Hire me
+              Contact me
             </button>
           </div>
         </header>
