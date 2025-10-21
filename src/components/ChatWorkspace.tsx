@@ -13,7 +13,7 @@ const PROMPTS = [
   {
     question: "What are your skills and qualifications?",
     answer:
-      `I'm a recent BSc CompSci graduate from Aston Uni, where I learnt many essential theoretical concepts that have aided me on my dev journey. This, alongside my various practical solo and group projects, has allowed me to develop an extremely strong problem solving mindset and programming skillset. A more comprehensive list of skills can be found in the "skills" section but some of my core skills and technologies I work with include:
+      `I'm a recent BSc CompSci graduate from Aston Uni, where I learnt many essential theoretical concepts that have aided me on my dev journey. This, alongside my various practical solo and group projects, has allowed me to develop an extremely strong problem solving mindset and programming skillset. A more comprehensive list of skills can be found in the "skills" section but some of my **core skills** and technologies I work with include:
       
       • Backend Development: Java (incl. Spring Boot), Python (incl. FastAPI), PostgreSQL, Docker
       • AI & ML: Reinforcement Learning, PyTorch, Gymnasium, Stable Baselines3
@@ -21,13 +21,16 @@ const PROMPTS = [
       • DevOps: Linux, Caddy, VPS deployment, CI/CD`,
   },
   {
-    question: "",
-    answer: ""
+    question: "What kind of work are you looking for?",
+    answer:
+      `I'm currently looking for a role where I can build impactful software while continuing to grow technically - whether that’s in backend, full-stack, AI-related development, or even robotics.
+      
+      I enjoy roles that let me think deeply about system design and performance, but I also enjoy anything that encourages experimentation and learning new tech. Whether it’s scaling backend systems, integrating AI features, or developing intelligent automation, I’m always most motivated when the work feels both challenging and meaningful.`,
   },
   {
-    question: "",
-    answer: ""
-  },
+    question: "Thank you for reading.",
+    answer:""
+  }
 ];
 
 type Message = {
@@ -86,13 +89,6 @@ export default function ChatWorkspace() {
     setIsTypingPrompt(true);
   };
 
-  const handleReset = () => {
-    setStage(0);
-    setMessages([]);
-    setInputValue("");
-    beginTyping();
-  };
-
   const stopTypewriter = () => {
     if (typewriterRef.current) {
       window.clearInterval(typewriterRef.current);
@@ -129,7 +125,7 @@ export default function ChatWorkspace() {
   };
 
   const showConversation = messages.length > 0;
-  const sendDisabled = stage >= PROMPTS.length;
+  const sendDisabled = stage + 1 >= PROMPTS.length;
 
   useEffect(() => {
     if (!showConversation) {
@@ -151,12 +147,11 @@ export default function ChatWorkspace() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
     >
-      <div className="flex items-center gap-2 rounded-full bg-[#353640] px-3 py-2 sm:gap-3 sm:px-4 sm:py-3">
+      <div className="flex items-center gap-2 rounded-full bg-[#353640] px-3 py-1.5 sm:gap-3 sm:px-4 sm:py-2.5">
         <button
           type="button"
           className="inline-flex aspect-square h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[#3f4049] text-xl font-medium leading-none text-white hover:bg-[#4b4c56] sm:h-11 sm:w-11"
           aria-label="Start a new prompt"
-          onClick={handleReset}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -246,7 +241,7 @@ export default function ChatWorkspace() {
     "relative z-10 flex h-full w-full max-w-3xl flex-1 flex-col overflow-hidden min-h-0 pb-16";
   const containerClasses = showConversation
     ? baseContainerClasses
-    : `${baseContainerClasses} items-center justify-center gap-8 text-center`;
+    : `${baseContainerClasses} items-center justify-center gap-8 text-center pointer-events-none`;
 
   return (
     <motion.div className={containerClasses}>
@@ -264,7 +259,7 @@ export default function ChatWorkspace() {
               <motion.h1 className="text-3xl font-semibold text-white md:text-4xl">
                 Umair&apos;s Portfolio (not ChatGPT...)
               </motion.h1>
-              <div className="w-full max-w-3xl">{inputBar}</div>
+              <div className="w-full max-w-3xl pointer-events-auto">{inputBar}</div>
             </motion.div>
           ) : (
             <motion.div
