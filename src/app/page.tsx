@@ -2,8 +2,23 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import Constellation from "@/components/Constellation";
 import ChatWorkspace from "@/components/ChatWorkspace";
+
+type ProjectStatus = "complete" | "incomplete";
+
+type Project = {
+  id: string;
+  name: string;
+  image: string;
+  imageWidth?: number;
+  imageHeight?: number;
+  description: string;
+  subheading: string;
+  status: ProjectStatus;
+  tags?: string[];
+};
 
 const primaryNav = [
   {
@@ -101,15 +116,57 @@ const primaryNav = [
   },
 ];
 
-const projects = [
-  "RL Omelette Environment",
-  "Shorty URL Shortener",
-  "DocuQA RAG document summariser",
+const projects: Project[] = [
+  {
+    id: "rl-omelette",
+    name: "RL Omelette Environment",
+    image: "/omelette-rl.png",
+    imageWidth: 404,
+    imageHeight: 294,
+    description:
+      `A custom reinforcement learning environment built in Python and PyBullet, where a Franka Panda robot learns to flip a rigid-body omelette through reward shaping, policy optimisation, and iterative testing using Stable Baselines3.`,
+    subheading: "Teaching a robot arm to flip omelettes using RL",
+    status: "complete",
+    tags: [
+      "Python",
+      "Gymnasium API",
+      "PyTorch",
+      "Stable Baselines3",
+      "TensorFlow",
+      "PyBullet",
+      "Robotics",
+      "PPO",
+      "SAC",
+    ],
+  },
+  {
+    id: "shorty",
+    name: "Shorty URL Shortener",
+    image:
+      "/shortyurl.png",
+    description:
+      "A production-ready link shortener with analytics, rate limiting, and shareable QR codes. Built with FastAPI, PostgreSQL, and a sleek React dashboard.",
+    subheading: "",
+    status: "complete",
+    tags: ["Java", "Spring Boot", "PostgreSQL", "REST API", "Docker", "Caddy", "VPS Deployment", "CI/CD"],
+  },
+  {
+    id: "docuqa",
+    name: "DocuQA RAG Document Summariser",
+    image:
+      "/docuqa.png",
+    description:
+      "Retrieval Augmented Generation workflow that ingests technical docs and produces conversational summaries. Includes chunking pipelines, embedding search, and a simple Next.js UI.",
+    subheading: "",
+    status: "incomplete",
+    tags: ["Python", "FastAPI", "React", "TypeScript", "Tailwind", "RAG", "LangChain", "OpenAI API"],
+  },
 ];
 
 export default function Home() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
 
   const toggleSidebar = () => setSidebarCollapsed((prev) => !prev);
   const openMobileSidebar = () => setMobileSidebarOpen(true);
@@ -160,18 +217,37 @@ export default function Home() {
     <div className="space-y-2">
       <p className="px-3 text-xs uppercase tracking-wide text-white/35">Projects</p>
       <div className="space-y-1">
-        {projects.map((title) => (
-          <button
-            key={title}
-            className="w-full truncate rounded-lg px-3 py-2 text-left text-white/70 transition hover:bg-white/10 hover:text-white"
-            onClick={onNavigate}
-          >
-            {title}
-          </button>
-        ))}
+        {projects.map((project) => {
+          const isActive = project.id === activeProjectId;
+          return (
+            <button
+              key={project.id}
+              type="button"
+              className={`w-full truncate rounded-lg px-3 py-2 text-left transition hover:bg-white/10 hover:text-white ${
+                isActive ? "bg-white/15 text-white shadow-[0_0_14px_rgba(255,255,255,0.12)]" : "text-white/70"
+              }`}
+              onClick={() => {
+                setActiveProjectId((prev) => (prev === project.id ? null : project.id));
+                onNavigate?.();
+              }}
+              aria-pressed={isActive}
+            >
+              {project.name}
+            </button>
+          );
+        })}
       </div>
     </div>
   );
+
+  const activeProject = activeProjectId ? projects.find((project) => project.id === activeProjectId) ?? null : null;
+  const activeProjectStatus: ProjectStatus | null = activeProject?.status ?? null;
+  const isActiveProjectComplete = activeProjectStatus === "complete";
+
+  const statusDotGlow = isActiveProjectComplete
+    ? "before:bg-[#22c55e]/50 after:bg-[#22c55e]"
+    : "before:bg-[#f87171]/50 after:bg-[#f87171]";
+  const statusLabel = isActiveProjectComplete ? "Complete" : "Incomplete";
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#202123] text-[#ececf1]">
@@ -381,6 +457,93 @@ export default function Home() {
         <div className="relative flex flex-1 items-stretch justify-center overflow-hidden min-h-0 px-4 py-0">
           <Constellation className="pointer-events-none absolute inset-0 z-0" />
           <ChatWorkspace />
+
+          {activeProject && (
+            <>
+              <div
+                className="absolute inset-0 z-10 bg-black/70 backdrop-blur-md transition-opacity"
+                aria-hidden="true"
+              />
+              <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center px-4 py-10 sm:px-6">
+                <div className="pointer-events-auto relative flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-3xl border border-white/10 bg-black/60 shadow-[0_0_55px_rgba(0,0,0,0.65)]">
+                  <div className="border-b border-white/10 px-6 py-5">
+                    <div className="flex items-center justify-between">
+                      <span className="inline-flex items-center gap-3 rounded-full border border-white/10 px-4 py-1.5 text-xs uppercase tracking-wide text-white/60">
+                        {statusLabel}
+                        <span
+                          className={`relative flex h-2.5 w-2.5 items-center justify-center before:absolute before:h-4 before:w-4 before:animate-ping before:rounded-full before:content-[''] after:h-2 after:w-2 after:rounded-full after:content-[''] ${statusDotGlow}`}
+                          aria-hidden="true"
+                        />
+                      </span>
+                      <button
+                        type="button"
+                        className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition hover:bg-white/10"
+                        onClick={() => setActiveProjectId(null)}
+                        aria-label="Close project panel"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          className="h-5 w-5"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" d="m6 6 12 12M6 18 18 6" />
+                        </svg>
+                      </button>
+                    </div>
+                    <div className="mt-6 space-y-2 text-center">
+                      <h1 className="text-2xl font-semibold text-white">{activeProject.name}</h1>
+                      {activeProject.subheading && (
+                        <h2 className="text-sm text-white/70">{activeProject.subheading}</h2>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex-1 space-y-6 overflow-y-auto px-6 py-6 text-center">
+                    {activeProject.imageWidth && activeProject.imageHeight ? (
+                      <div className="flex w-full justify-center">
+                        <Image
+                          src={activeProject.image}
+                          alt={activeProject.name}
+                          width={activeProject.imageWidth}
+                          height={activeProject.imageHeight}
+                          className="rounded-2xl border border-white/10 bg-white/5 object-contain"
+                          priority
+                        />
+                      </div>
+                    ) : (
+                      <div className="relative mx-auto aspect-[16/9] w-full overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+                        <Image
+                          src={activeProject.image}
+                          alt={activeProject.name}
+                          fill
+                          className="object-cover object-center"
+                          sizes="(max-width: 768px) 100vw, 640px"
+                          priority
+                        />
+                      </div>
+                    )}
+                    <p className="mx-auto max-w-2xl text-sm leading-relaxed text-white/70 whitespace-pre-line">
+                      {activeProject.description}
+                    </p>
+                    {activeProject.tags && activeProject.tags.length > 0 && (
+                      <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
+                        {activeProject.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-white/70 shadow-[0_0_12px_rgba(255,255,255,0.08)] backdrop-blur-sm"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </main>
     </div>

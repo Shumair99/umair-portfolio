@@ -7,7 +7,8 @@ const PROMPTS = [
   {
     question: "Tell me about yourself...",
     answer:
-      `I'm Umair - a software developer with a passion for creating full-scale, useful software. I've got about 5 years of practical programming experience, including a 3 year Computer Science degree at Aston University. For the most part, I focus on backend development, but I've recently been working on building full-stack applications and applying effective DevOps practices and principles during development. I've also been really enjoying getting into the AI space, recently working on a reinforcement learning project as well as exploring other ML concepts. You can find more info about what I've been exploring recently on my blog.\n 
+      `I'm Umair - a software developer with a passion for creating full-scale, useful software. I've got about 5 years of practical programming experience, including a 3 year Computer Science degree at Aston University. For the most part, I focus on backend development, but I've recently been working on building full-stack applications and applying effective DevOps practices and principles during development. I've also been really enjoying getting into the AI space, recently working on a reinforcement learning project as well as exploring other ML concepts. You can find more info about what I've been exploring recently on my blog.
+      
       In terms of my personal life, for fun I like going on walks, going to the gym, looking after my chickens, and occasionally watching anime/shows. I'm also a huge gaming fan despite not playing too often nowadays. However, I think the most important fact of all about me is that I love dr pepper.`,
   },
   {
