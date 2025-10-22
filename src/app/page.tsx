@@ -247,6 +247,12 @@ export default function Home() {
   const activeProject = activeProjectId ? projects.find((project) => project.id === activeProjectId) ?? null : null;
   const activeProjectStatus: ProjectStatus | null = activeProject?.status ?? null;
   const isActiveProjectComplete = activeProjectStatus === "complete";
+  const activeProjectImageWidth = activeProject
+    ? activeProject.imageWidth ?? ("width" in activeProject.image ? activeProject.image.width : undefined)
+    : undefined;
+  const activeProjectImageHeight = activeProject
+    ? activeProject.imageHeight ?? ("height" in activeProject.image ? activeProject.image.height : undefined)
+    : undefined;
 
   const statusDotGlow = isActiveProjectComplete
     ? "before:bg-[#22c55e]/50 after:bg-[#22c55e]"
@@ -519,26 +525,15 @@ export default function Home() {
                   </div>
                   <div className="flex-1 space-y-6 overflow-y-auto px-6 py-6 text-center">
                     <div className="flex w-full justify-center">
-                      {activeProject.imageWidth && activeProject.imageHeight ? (
-                        <Image
-                          src={activeProject.image}
-                          alt={activeProject.name}
-                          quality={80}
-                          width={activeProject.imageWidth}
-                          height={activeProject.imageHeight}
-                          className="rounded-2xl border border-white/10 bg-white/5 object-contain"
-                          priority
-                        />
-                      ) : (
-                        <Image
-                          src={activeProject.image}
-                          alt={activeProject.name}
-                          quality={80}
-                          className="h-auto w-full max-w-3xl rounded-2xl border border-white/10 bg-white/5 object-contain"
-                          sizes="(max-width: 768px) 100vw, 640px"
-                          priority
-                        />
-                      )}
+                      <Image
+                        src={activeProject.image}
+                        alt={activeProject.name}
+                        quality={80}
+                        width={activeProjectImageWidth}
+                        height={activeProjectImageHeight}
+                        className="h-auto max-w-full rounded-2xl border border-white/10 bg-white/5 object-contain"
+                        priority
+                      />
                     </div>
                     <p className="mx-auto max-w-2xl text-sm leading-relaxed text-white/70 whitespace-pre-line">
                       {activeProject.description}
