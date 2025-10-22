@@ -2,20 +2,24 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import Constellation from "@/components/Constellation";
 import ChatWorkspace from "@/components/ChatWorkspace";
+import rlOmeletteImg from "@/assets/projects/omelette-rl.png";
+import shortyImg from "@/assets/projects/shortyurl.png";
+import docuqaImg from "@/assets/projects/docuqa.png";
 
 type ProjectStatus = "complete" | "incomplete";
 
 type Project = {
   id: string;
   name: string;
-  image: string;
+  image: StaticImageData;
   imageWidth?: number;
   imageHeight?: number;
   description: string;
   subheading: string;
+  subheadingLink?: string;
   status: ProjectStatus;
   tags?: string[];
 };
@@ -120,7 +124,7 @@ const projects: Project[] = [
   {
     id: "rl-omelette",
     name: "RL Omelette Environment",
-    image: "/omelette-rl.png",
+    image: rlOmeletteImg,
     imageWidth: 404,
     imageHeight: 294,
     description:
@@ -129,32 +133,32 @@ const projects: Project[] = [
     status: "complete",
     tags: [
       "Python",
-      "Gymnasium API",
-      "PyTorch",
+      "PyBullet",
+      "Gymnasium",
       "Stable Baselines3",
       "TensorFlow",
-      "PyBullet",
+      "Reinforcement Learning",
       "Robotics",
       "PPO",
       "SAC",
+      "Simulation",
     ],
   },
   {
     id: "shorty",
     name: "Shorty URL Shortener",
-    image:
-      "/shortyurl.png",
+    image: shortyImg,
     description:
-      "A production-ready link shortener with analytics, rate limiting, and shareable QR codes. Built with FastAPI, PostgreSQL, and a sleek React dashboard.",
-    subheading: "",
+      "A production-ready link shortener with analytics, rate limiting, and shareable QR codes. Built with Spring Boot, PostgreSQL, and a sleek React dashboard.",
+    subheading: "Live deployment on shortyurl.live",
+    subheadingLink: "https://shortyurl.live",
     status: "complete",
     tags: ["Java", "Spring Boot", "PostgreSQL", "REST API", "Docker", "Caddy", "VPS Deployment", "CI/CD"],
   },
   {
     id: "docuqa",
     name: "DocuQA RAG Document Summariser",
-    image:
-      "/docuqa.png",
+    image: docuqaImg,
     description:
       "Retrieval Augmented Generation workflow that ingests technical docs and produces conversational summaries. Includes chunking pipelines, embedding search, and a simple Next.js UI.",
     subheading: "",
@@ -496,34 +500,46 @@ export default function Home() {
                     <div className="mt-6 space-y-2 text-center">
                       <h1 className="text-2xl font-semibold text-white">{activeProject.name}</h1>
                       {activeProject.subheading && (
-                        <h2 className="text-sm text-white/70">{activeProject.subheading}</h2>
+                        <h2 className="text-sm text-white/70">
+                          {activeProject.subheadingLink ? (
+                            <Link
+                              href={activeProject.subheadingLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-white/80 underline decoration-white/20 underline-offset-4 transition hover:text-white hover:decoration-white/60"
+                            >
+                              {activeProject.subheading}
+                            </Link>
+                          ) : (
+                            activeProject.subheading
+                          )}
+                        </h2>
                       )}
                     </div>
                   </div>
                   <div className="flex-1 space-y-6 overflow-y-auto px-6 py-6 text-center">
-                    {activeProject.imageWidth && activeProject.imageHeight ? (
-                      <div className="flex w-full justify-center">
+                    <div className="flex w-full justify-center">
+                      {activeProject.imageWidth && activeProject.imageHeight ? (
                         <Image
                           src={activeProject.image}
                           alt={activeProject.name}
+                          quality={80}
                           width={activeProject.imageWidth}
                           height={activeProject.imageHeight}
                           className="rounded-2xl border border-white/10 bg-white/5 object-contain"
                           priority
                         />
-                      </div>
-                    ) : (
-                      <div className="relative mx-auto aspect-[16/9] w-full overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+                      ) : (
                         <Image
                           src={activeProject.image}
                           alt={activeProject.name}
-                          fill
-                          className="object-cover object-center"
+                          quality={80}
+                          className="h-auto w-full max-w-3xl rounded-2xl border border-white/10 bg-white/5 object-contain"
                           sizes="(max-width: 768px) 100vw, 640px"
                           priority
                         />
-                      </div>
-                    )}
+                      )}
+                    </div>
                     <p className="mx-auto max-w-2xl text-sm leading-relaxed text-white/70 whitespace-pre-line">
                       {activeProject.description}
                     </p>
