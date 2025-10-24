@@ -144,7 +144,7 @@ export default function BlogPage() {
                 Back to portfolio
               </Link>
               <Link
-                href="mailto:contact@umair.dev"
+                href="mailto:umairahmed0121@hotmail.com"
                 className="rounded-full border border-white/15 px-3 py-1 text-xs text-white/70 transition hover:border-white/30 hover:text-white"
               >
                 Email Umair

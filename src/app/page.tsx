@@ -219,7 +219,7 @@ export default function Home() {
 
   const renderProjects = (onNavigate?: () => void) => (
     <div className="space-y-2">
-      <p className="px-3 text-xs uppercase tracking-wide font-semibold text-white/60">Projects</p>
+      <p className="px-3 text-xs uppercase tracking-wide text-white/35">Projects</p>
       <div className="space-y-1">
         {projects.map((project) => {
           const isActive = project.id === activeProjectId;
@@ -417,9 +417,12 @@ export default function Home() {
                 Looking for work
               </span>
             </button>
-            <button className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-white/10 sm:px-4 sm:text-sm">
+            <a
+              href="mailto:umairahmed0121@hotmail.com"
+              className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-white/10 sm:px-4 sm:text-sm"
+            >
               Contact me
-            </button>
+            </a>
           </div>
         </header>
 
