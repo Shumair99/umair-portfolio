@@ -431,10 +431,10 @@ export default function Home() {
           <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-white/70 sm:text-sm">
             <button className="flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.08] px-3 py-1.5 hover:bg-white/10 sm:px-4">
               <span className="uppercase tracking-wide text-[0.65rem] text-white/60 sm:text-xs">Status</span>
-              <span className="inline-flex items-center gap-1 rounded-full bg-[#f87171]/25 px-2 py-0.5 text-[0.65rem] font-medium text-[#f87171] shadow-[0_0_10px_rgba(248,113,113,0.45)] sm:text-xs">
+              <span className="inline-flex items-center gap-1 rounded-full bg-[#22c55e]/20 px-2 py-0.5 text-[0.65rem] font-medium text-[#22c55e] shadow-[0_0_10px_rgba(34,197,94,0.45)] sm:text-xs">
                 <span className="relative flex h-2.5 w-2.5 items-center justify-center">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#f87171]/60" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[#f87171]" />
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#22c55e]/60" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[#22c55e]" />
                 </span>
                 Looking for work
               </span>

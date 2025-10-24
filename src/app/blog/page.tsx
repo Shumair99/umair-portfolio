@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import Constellation from "@/components/Constellation";
 
 type BlogSection = {
   heading?: string;
@@ -38,75 +37,15 @@ const blogPosts: BlogPost[] = [
       {
         heading: "Reward shaping without falling into traps",
         body: [
-          "The biggest challenge was balancing dense rewards with a sparse success signal. I started with a basic waypoint reward, layered in velocity constraints, and eventually introduced a shaped term for pan orientation. Every additional signal was validated with tensorboard runs to ensure I wasn’t encouraging reward hacking behaviours.",
+          "The biggest challenge was balancing dense rewards with a sparse success signal. I started with a basic waypoint reward, layered in velocity constraints, and eventually introduced a shaped term for pan orientation. Every additional signal was validated with TensorBoard runs to ensure I wasn't encouraging reward-hacking behaviours.",
         ],
       },
       {
         heading: "Takeaways",
         body: [
-          "• Simulator fidelity matters less than consistent resets.",
-          "• Logging tactile metrics (pan angular velocity, wrist torque) prevented me from chasing ghosts.",
-          "• PPO remained the most stable baseline, but SAC won once I dialled in entropy regularisation.",
-        ],
-      },
-    ],
-  },
-  {
-    id: "bootstrapping-shorty",
-    title: "Shipping Shorty: From CRUD Idea to Production Link Shortener",
-    description:
-      "How I iterated from a weekend prototype into a production-ready URL shortener with analytics, rate limiting, and CI/CD guardrails.",
-    date: "August 2024",
-    readTime: "7 min read",
-    tags: ["Java", "Spring Boot", "PostgreSQL", "DevOps"],
-    sections: [
-      {
-        heading: "Start with constraints",
-        body: [
-          "I scoped Shorty around three promises: links should resolve in <30ms, analytics must be near real-time, and the API should be boring to integrate. Those constraints drove tech choices—Spring Boot for ergonomics, PostgreSQL for transactional guarantees, and Redis for hot-path caching.",
-        ],
-      },
-      {
-        heading: "Operationalising a side project",
-        body: [
-          "Observability was non-negotiable. I wired structured logs with Logback, collected request traces, and exported Prometheus metrics for rate-limited requests. The deployment pipeline ships via GitHub Actions to a Dockerised VPS, running migrations automatically before rolling out application containers.",
-        ],
-      },
-      {
-        heading: "What I’d do next",
-        body: [
-          "• Introduce streaming analytics via ClickHouse.",
-          "• Add bring-your-own-domain support with automated DNS verification.",
-          "• Experiment with OpenTelemetry to unify tracing between the API and React dashboard.",
-        ],
-      },
-    ],
-  },
-  {
-    id: "rag-pitfalls",
-    title: "RAG Without the Hype: What Actually Breaks First",
-    description:
-      "Three practical lessons from building DocuQA, a RAG pipeline that summarises technical documents into conversational answers.",
-    date: "June 2024",
-    readTime: "6 min read",
-    tags: ["RAG", "Vector Search", "Next.js", "OpenAI"],
-    sections: [
-      {
-        heading: "Chunking is product design",
-        body: [
-          "A naïve fixed-size chunker made answers sound robotic. Switching to recursive chunking with semantic boundaries (headings, bullet lists) drastically improved answer coherence and reduced hallucinations.",
-        ],
-      },
-      {
-        heading: "Embeddings aren’t point-and-shoot",
-        body: [
-          "I benchmarked multiple embedding models against a labelled dataset of relevant/irrelevant passages. Cohere’s v3 multilingual model outperformed open-source alternatives for noisy PDF text, but the latency trade-off meant aggressive caching and pre-computed semantic search results.",
-        ],
-      },
-      {
-        heading: "Tight feedback loop",
-        body: [
-          "A simple evaluator flagged responses that overused boilerplate or ignored the user question. Feeding those failures back into prompt engineering (and occasionally re-chunking) produced a measurable boost in user ratings.",
+          "- Simulator fidelity matters less than consistent resets.",
+          "- Logging tactile metrics (pan angular velocity, wrist torque) prevented me from chasing ghosts.",
+          "- PPO remained the most stable baseline, but SAC won once I dialled in entropy regularisation.",
         ],
       },
     ],
@@ -121,10 +60,8 @@ export default function BlogPage() {
   }, [activePostId]);
 
   return (
-    <div className="relative flex min-h-screen bg-[#202123] text-[#ececf1]">
-      <Constellation className="pointer-events-none absolute inset-0 z-0" />
-
-      <aside className="relative z-10 hidden w-full max-w-xs flex-col border-r border-white/10 bg-[#151515]/90 px-5 py-8 backdrop-blur md:flex">
+    <div className="relative flex min-h-screen bg-[#18191c] text-[#ececf1]">
+      <aside className="hidden w-full max-w-xs flex-col border-r border-white/10 bg-[#121316] px-5 py-8 md:flex">
         <div className="flex items-center justify-between">
           <div className="text-sm font-semibold uppercase tracking-wide text-white/50">Umair&apos;s Blog</div>
           <Link
@@ -144,7 +81,7 @@ export default function BlogPage() {
                 type="button"
                 className={`w-full rounded-2xl border border-white/10 px-4 py-4 text-left transition ${
                   isActive
-                    ? "bg-white/10 text-white shadow-[0_0_18px_rgba(255,255,255,0.12)]"
+                    ? "bg-white/10"
                     : "bg-transparent text-white/70 hover:bg-white/5 hover:text-white"
                 }`}
                 onClick={() => setActivePostId(post.id)}
@@ -162,20 +99,21 @@ export default function BlogPage() {
         </div>
       </aside>
 
-      <main className="relative z-10 flex flex-1 flex-col px-4 py-6 md:px-10 md:py-10">
-        <div className="mx-auto flex w-full max-w-4xl flex-col gap-6">
-          <header className="rounded-3xl border border-white/10 bg-black/40 px-6 py-6 shadow-[0_0_35px_rgba(0,0,0,0.45)] backdrop-blur">
-            <div className="flex flex-wrap items-center justify-between gap-3 text-xs uppercase tracking-wide text-white/50">
+      <main className="flex flex-1 justify-center overflow-y-auto px-4 py-8 md:px-20 md:py-12">
+        <div className="w-full max-w-4xl lg:max-w-5xl">
+          <header className="space-y-4">
+            <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-wide text-white/50">
               <span>{activePost.date}</span>
+              <span>/</span>
               <span>{activePost.readTime}</span>
             </div>
-            <h1 className="mt-4 text-3xl font-semibold text-white md:text-4xl">{activePost.title}</h1>
-            <p className="mt-4 text-sm leading-relaxed text-white/70">{activePost.description}</p>
-            <div className="mt-6 flex flex-wrap items-center gap-2">
+            <h1 className="text-3xl font-semibold text-white md:text-4xl">{activePost.title}</h1>
+            <p className="text-sm leading-relaxed text-white/70">{activePost.description}</p>
+            <div className="flex flex-wrap items-center gap-2 pt-1">
               {activePost.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-white/70 shadow-[0_0_12px_rgba(255,255,255,0.08)]"
+                  className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-white/70"
                 >
                   {tag}
                 </span>
@@ -183,26 +121,20 @@ export default function BlogPage() {
             </div>
           </header>
 
-          <article className="rounded-3xl border border-white/10 bg-black/30 px-6 py-8 shadow-[0_0_35px_rgba(0,0,0,0.35)] backdrop-blur">
-            <div className="space-y-10 text-sm leading-relaxed text-white/80">
-              {activePost.sections.map((section, index) => (
-                <section key={section.heading ? `${activePost.id}-${section.heading}` : `${activePost.id}-${index}`}>
-                  {section.heading && (
-                    <h2 className="text-lg font-semibold text-white">{section.heading}</h2>
-                  )}
-                  <div className="mt-3 space-y-3">
-                    {section.body.map((paragraph, paragraphIndex) => (
-                      <p key={paragraphIndex} className="whitespace-pre-line">
-                        {paragraph}
-                      </p>
-                    ))}
-                  </div>
-                </section>
-              ))}
-            </div>
+          <article className="mt-10 space-y-10 text-sm leading-relaxed text-white/80">
+            {activePost.sections.map((section, index) => (
+              <section key={section.heading ? `${activePost.id}-${section.heading}` : `${activePost.id}-${index}`}>
+                {section.heading && <h2 className="text-lg font-semibold text-white">{section.heading}</h2>}
+                <div className="mt-3 space-y-3">
+                  {section.body.map((paragraph, paragraphIndex) => (
+                    <p key={paragraphIndex}>{paragraph}</p>
+                  ))}
+                </div>
+              </section>
+            ))}
           </article>
 
-          <footer className="flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-white/10 bg-black/20 px-6 py-4 text-xs text-white/60 backdrop-blur">
+          <footer className="mt-12 flex flex-wrap items-center justify-between gap-4 text-xs text-white/60">
             <span>Enjoyed the read? Share your thoughts with me on LinkedIn or drop an email.</span>
             <div className="flex items-center gap-3">
               <Link

@@ -1,0 +1,52 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Node dependencies and caches
+node_modules
+.pnpm-store
+.npm
+.cache
+
+# Next.js build output
+.next
+out
+dist
+build
+coverage
+
+# Env files (keep example only)
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+!.env.example
+
+# Tooling
+.eslintcache
+
+# Editors/OS
+.DS_Store
+.idea
+.vscode
+*.swp
+*.swo
+
+# Git
+.git
+.gitignore
+
+# Temp
+tmp
+temp

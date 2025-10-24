@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Umair Portfolio Studio",
+  title: "umairdot.dev",
   description:
-    "ChatGPT-inspired portfolio workspace to showcase Umair's creative journey.",
+    "ChatGPT inspired portfolio",
 };
 
 export default function RootLayout({
