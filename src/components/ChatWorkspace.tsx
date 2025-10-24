@@ -7,26 +7,22 @@ const PROMPTS = [
   {
     question: "Tell me about yourself...",
     answer:
-      `I'm Umair - a software developer with a passion for creating full-scale, useful software. I've got about 5 years of practical programming experience, including a 3 year Computer Science degree at Aston University. For the most part, I focus on backend development, but I've recently been working on building full-stack applications and applying effective DevOps practices and principles during development. I've also been really enjoying getting into the AI space, recently working on a reinforcement learning project as well as exploring other ML concepts. You can find more info about what I've been exploring recently on my blog.
-      
-      In terms of my personal life, for fun I like going on walks, going to the gym, looking after my chickens, and occasionally watching anime/shows. I'm also a huge gaming fan despite not playing too often nowadays. However, I think the most important fact of all about me is that I love dr pepper.`,
+      `I'm Umair - a multidisciplinary software dev who enjoys learning, coding, and solving problems. Outside of coding, I like going for walks, hitting the gym, looking after my chickens, and watching shows.`,
   },
   {
     question: "What are your skills and qualifications?",
     answer:
-      `I'm a recent BSc CompSci graduate from Aston Uni, where I learnt many essential theoretical concepts that have aided me on my dev journey. This, alongside my various practical solo and group projects, has allowed me to develop an extremely strong problem solving mindset and programming skillset. A more comprehensive list of skills can be found in the "skills" section but some of my **core skills** and technologies I work with include:
+      `I'm a recent BSc CompSci graduate from Aston Uni. Click the "skills" section on the left for a full list, but some of my core skills include:
       
-      • Backend Development: Java (incl. Spring Boot), Python (incl. FastAPI), PostgreSQL, Docker
-      • AI & ML: Reinforcement Learning, PyTorch, Gymnasium, Stable Baselines3
-      • Frontend: React, TypeScript, Tailwind
+      • Backend Development: Java (Spring Boot), Python (FastAPI), PostgreSQL, Docker
+      • AI & ML: RL in robotics, PyTorch, Gymnasium, Tensorflow
+      • Frontend: JS, React, TypeScript, Tailwind
       • DevOps: Linux, Caddy, VPS deployment, CI/CD`,
   },
   {
-    question: "What kind of work are you looking for?",
+    question: "Can you show me some examples of your projects?",
     answer:
-      `I'm currently looking for a role where I can build impactful software while continuing to grow technically - whether that’s in backend, full-stack, AI-related development, or even robotics.
-      
-      I enjoy roles that let me think deeply about system design and performance, but I also enjoy anything that encourages experimentation and learning new tech. Whether it’s scaling backend systems, integrating AI features, or developing intelligent automation, I’m always most motivated when the work feels both challenging and meaningful.`,
+      "I've completed many solo and group projects throughout uni and as an indie dev. A list of my most recent projects can be found on the left. I'm also always working on new things so if you'd like to see what I'm currently working on or collaborate feel free to reach out through email or socials!",
   },
   {
     question: "Thank you for reading.",
@@ -237,7 +233,6 @@ export default function ChatWorkspace() {
       </div>
     </motion.div>
   );
-
   const baseContainerClasses =
     "relative z-10 flex h-full w-full max-w-3xl flex-1 flex-col overflow-hidden min-h-0 pb-16";
   const containerClasses = showConversation

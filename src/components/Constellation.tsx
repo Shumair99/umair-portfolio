@@ -50,10 +50,10 @@ export default function Constellation({ className }: ConstellationProps) {
         },
         links: {
           enable: true,
-          distance: 160,
+          distance: 120,
           color: "#ffffff",
-          opacity: 0.3,
-          width: 0.6,
+          opacity: 0.12,
+          width: 0.4,
         },
       },
       interactivity: {

@@ -219,7 +219,7 @@ export default function Home() {
 
   const renderProjects = (onNavigate?: () => void) => (
     <div className="space-y-2">
-      <p className="px-3 text-xs uppercase tracking-wide text-white/35">Projects</p>
+      <p className="px-3 text-xs uppercase tracking-wide font-semibold text-white/60">Projects</p>
       <div className="space-y-1">
         {projects.map((project) => {
           const isActive = project.id === activeProjectId;
@@ -405,29 +405,7 @@ export default function Home() {
       <main className="flex flex-1 flex-col overflow-hidden">
         <header className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-4 py-3">
           <div className="flex flex-1 flex-wrap items-center gap-2 sm:flex-none sm:gap-3">
-            <div className="relative">
-              <button
-                type="button"
-                className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-white/10 sm:px-4 sm:py-2 sm:text-sm"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Idk what to put here
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  className="h-4 w-4"
-                  aria-hidden="true"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="m6 9 6 6 6-6" />
-                </svg>
-              </button>
-            </div>
           </div>
-
           <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-white/70 sm:text-sm">
             <button className="flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.08] px-3 py-1.5 hover:bg-white/10 sm:px-4">
               <span className="uppercase tracking-wide text-[0.65rem] text-white/60 sm:text-xs">Status</span>
@@ -465,7 +443,7 @@ export default function Home() {
         </button>
 
         <div className="relative flex flex-1 items-stretch justify-center overflow-hidden min-h-0 px-4 py-0">
-          <Constellation className="pointer-events-none absolute inset-0 z-0" />
+          <Constellation className="pointer-events-none absolute inset-0 z-0 opacity-25 md:opacity-20" />
           <ChatWorkspace />
 
           {activeProject && (
@@ -560,3 +538,5 @@ export default function Home() {
     </div>
   );
 }
+
+
