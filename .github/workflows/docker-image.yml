@@ -57,8 +57,8 @@ jobs:
         env:
            COSIGN_EXPERIMENTAL: "true"
         run: |
-           cosign sign ${{ env.IMAGE }}:${{ github.sha }}
-           cosign sign ${{ env.IMAGE }}:latest
+          cosign sign --yes ${{ env.IMAGE }}:${{ github.sha }}
+          cosign sign --yes ${{ env.IMAGE }}:latest
 
       - name: Verify the built digest (in CI)
         env:
