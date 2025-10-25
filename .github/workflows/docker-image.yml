@@ -24,6 +24,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
       - name: Set up Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -62,7 +65,10 @@ jobs:
           COSIGN_EXPERIMENTAL: "true"
           DIGEST: ${{ steps.build.outputs.digest }}
         run: |
-          cosign verify ${{ env.IMAGE }}@${DIGEST}
+          cosign verify \
+            --certificate-identity-regexp "https://github.com/shumair99/umair-portfolio/\.github/workflows/.*" \
+            --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
+            ghcr.io/shumair99/umair-portfolio/portfolio@${DIGEST}
 
       - name: Deploy to VPS
         if: github.event_name == 'push'
