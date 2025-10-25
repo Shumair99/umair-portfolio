@@ -25,7 +25,7 @@ const blogPosts: BlogPost[] = [
     description:
       "Lessons learned while building a Gymnasium-compatible Franka Panda environment where a robot learns to flip the perfect omelette.",
     date: "October 2024",
-    readTime: "9 min read",
+    readTime: "2 min read",
     tags: ["Reinforcement Learning", "PyBullet", "Python", "Stable Baselines3"],
     sections: [
       {
