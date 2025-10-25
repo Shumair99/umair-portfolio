@@ -66,7 +66,7 @@ jobs:
           DIGEST: ${{ steps.build.outputs.digest }}
         run: |
           cosign verify \
-            --certificate-identity-regexp "https://github.com/shumair99/umair-portfolio/\.github/workflows/.*" \
+            --certificate-identity "https://github.com/Shumair99/umair-portfolio/.github/workflows/docker-image.yml@refs/heads/master" \
             --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
             ghcr.io/shumair99/umair-portfolio/portfolio@${DIGEST}
 
