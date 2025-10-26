@@ -162,7 +162,7 @@ const projects: Project[] = [
     description:
       "Retrieval Augmented Generation workflow that ingests technical docs and produces conversational summaries. Includes chunking pipelines, embedding search, and a simple Next.js UI.",
     subheading: "",
-    status: "incomplete",
+    status: "complete",
     tags: ["Python", "FastAPI", "React", "TypeScript", "Tailwind", "RAG", "LangChain", "OpenAI API"],
   },
 ];
@@ -405,6 +405,24 @@ export default function Home() {
       <main className="flex flex-1 flex-col overflow-hidden">
         <header className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-4 py-3">
           <div className="flex flex-1 flex-wrap items-center gap-2 sm:flex-none sm:gap-3">
+            <button
+              type="button"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/5 text-white transition hover:bg-white/10 md:hidden"
+              onClick={openMobileSidebar}
+              aria-label="Open sidebar"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                className="h-5 w-5"
+              >
+                <rect width="18" height="18" x="3" y="3" rx="2" />
+                <path d="M9 3v18" />
+              </svg>
+            </button>
           </div>
           <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-white/70 sm:text-sm">
             <button className="flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.08] px-3 py-1.5 hover:bg-white/10 sm:px-4">
@@ -425,25 +443,6 @@ export default function Home() {
             </a>
           </div>
         </header>
-
-        <button
-          type="button"
-          className="ml-4 mt-3 inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/5 text-white transition hover:bg-white/10 md:hidden"
-          onClick={openMobileSidebar}
-          aria-label="Open sidebar"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            className="h-5 w-5"
-          >
-            <rect width="18" height="18" x="3" y="3" rx="2" />
-            <path d="M9 3v18" />
-          </svg>
-        </button>
 
         <div className="relative flex flex-1 items-stretch justify-center overflow-hidden min-h-0 px-4 py-0">
           <Constellation className="pointer-events-none absolute inset-0 z-0 opacity-25 md:opacity-20" />
