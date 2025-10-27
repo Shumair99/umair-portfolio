@@ -11,7 +11,7 @@ export default function BlogComingSoonPage() {
         </span>
         <h1 className="text-3xl font-semibold md:text-4xl">Blog coming soon.</h1>
         <p className="text-sm leading-relaxed text-white/70 md:text-base">
-          I'll be writing blogs as I learn new skills and expand my knowledge on new technical concepts.
+          I&apos;ll be writing blogs as I learn new skills and expand my knowledge on new technical concepts.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
           <Link
