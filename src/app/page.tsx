@@ -8,6 +8,8 @@ import ChatWorkspace from "@/components/ChatWorkspace";
 import rlOmeletteImg from "@/assets/projects/omelette-rl.png";
 import shortyImg from "@/assets/projects/shortyurl.png";
 import docuqaImg from "@/assets/projects/docuqa.png";
+import stockBotImg from "@/assets/projects/stock-bot.png";
+import portfolioImg from "@/assets/projects/portfolio.png";
 
 type ProjectStatus = "complete" | "incomplete";
 
@@ -93,7 +95,7 @@ const primaryNav = [
   },
   {
     label: "Blog",
-    href: "/blog",
+    href: "/blog-coming-soon",
     external: false,
     icon: (
       <svg
@@ -133,7 +135,7 @@ const projects: Project[] = [
     status: "complete",
     tags: [
       "Python",
-      "PyBullet",
+      "PyTorch",
       "Gymnasium",
       "Stable Baselines3",
       "TensorFlow",
@@ -141,7 +143,6 @@ const projects: Project[] = [
       "Robotics",
       "PPO",
       "SAC",
-      "Simulation",
     ],
   },
   {
@@ -164,6 +165,40 @@ const projects: Project[] = [
     subheading: "",
     status: "complete",
     tags: ["Python", "FastAPI", "React", "TypeScript", "Tailwind", "RAG", "LangChain", "OpenAI API"],
+  },
+  {
+    id: "stockbot",
+    name: "Trading Card Stock Alert Bot",
+    image: stockBotImg,
+    description:
+      "An automated web scraping and monitoring system that tracks restocks for rare trading card products and instantly sends alerts via Discord webhooks. Built with Playwright for browser automation with built-in proxy rotation for anti-bot evasion",
+    subheading: "Real-time stock monitor for limited trading card releases",
+    status: "complete",
+    tags: [
+      "Python",
+      "Playwright",
+      "AsyncIO",
+      "Discord Webhooks",
+      "Web Scraping",
+      "Proxy Rotation",
+    ],
+  },
+  {
+    id: "portfolio",
+    name: "This Website",
+    image: portfolioImg,
+    description:
+      "A ChatGPT-style portfolio that introduces me through conversation and showcases my projects and blog. Built with Next.js, Tailwind, and Framer Motion for smooth animations and a particles background for a modern feel. Deployed automatically using a CI/CD pipeline with Docker, Caddy, and GitHub Actions to a Hetzner VPS.",
+    subheading: "Designing immersive storytelling for umairdot.dev",
+    status: "complete",
+    tags: [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Docker",
+      "CI/CD"
+    ],
   },
 ];
 
